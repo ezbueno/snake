@@ -2,6 +2,9 @@ package snake.core;
 
 import java.awt.Rectangle;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import snake.graphics.Food;
 import snake.graphics.Rect;
 import snake.graphics.Renderer;
@@ -17,6 +20,8 @@ public class Game implements Runnable {
 	private Snake snake;
 	private Food food;
 
+	JFrame frame = new JFrame("Emnie");
+	
 	public void start() {
 		snake = new Snake();
 		gameWindow = new GameWindow(snake);
@@ -51,11 +56,19 @@ public class Game implements Runnable {
 		return snake.collidesWithItself() || isSnakeHitBounds();
 	}
 	
-	private void processGameOver() {
-		renderer.remove(snake);
-		renderer.remove(food);
-		renderer.add(new GameOverText(food.getEatenTimes()));
-		gameWindow.repaint();
+	private void processGameOver() {	
+		String option[] = {"Sim", "Não"};
+		
+		int choice = JOptionPane.showOptionDialog(null, "Gostaria de reiniciar o jogo?", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, option, option[1]);
+				
+		if (choice == 0) {
+			restartGame();
+		} else {
+			renderer.remove(snake);
+			renderer.remove(food);
+			renderer.add(new GameOverText(food.getEatenTimes()));
+			gameWindow.repaint();
+		}
 	}
 	
 	private boolean isSnakeHitBounds() {
@@ -79,5 +92,17 @@ public class Game implements Runnable {
 			return true;
 		}
 		return false;
+	}
+	
+	private void restartGame() {
+		gameWindow.setVisible(false);
+		
+		snake = new Snake();
+		gameWindow = new GameWindow(snake);
+		renderer = gameWindow.getRenderer();
+		food = new Food(snake, gameWindow.getDrawingArea());
+
+		addElementsToScreen();
+		new Thread(this).start();
 	}
 }
