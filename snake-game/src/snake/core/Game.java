@@ -61,7 +61,7 @@ public class Game implements Runnable {
 		renderer.remove(food);
 		renderer.add(new GameOverText(food.getEatenTimes()));
 		gameWindow.repaint();		
-				
+
 		try {
 			Thread.sleep(2000);
 			
@@ -69,10 +69,12 @@ public class Game implements Runnable {
 			
 			int choice = JOptionPane.showOptionDialog(null, "Gostaria de reiniciar o jogo?", 
 					null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, option, option[1]);
-					
+			
 			if (choice == 0) {
 				restartGame();
-			} 
+			} else {
+				System.exit(0);
+			}
 		} catch (Exception e) {
 		}
 	}
