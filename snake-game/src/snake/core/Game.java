@@ -62,13 +62,19 @@ public class Game implements Runnable {
 		renderer.add(new GameOverText(food.getEatenTimes()));
 		gameWindow.repaint();		
 				
-		String option[] = {"Sim", "Não"};
-		
-		int choice = JOptionPane.showOptionDialog(null, "Gostaria de reiniciar o jogo?", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, option, option[1]);
-				
-		if (choice == 0) {
-			restartGame();
-		} 
+		try {
+			Thread.sleep(2000);
+			
+			String option[] = {"Sim", "Não"};			
+			
+			int choice = JOptionPane.showOptionDialog(null, "Gostaria de reiniciar o jogo?", 
+					null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, option, option[1]);
+					
+			if (choice == 0) {
+				restartGame();
+			} 
+		} catch (Exception e) {
+		}
 	}
 	
 	private boolean isSnakeHitBounds() {
