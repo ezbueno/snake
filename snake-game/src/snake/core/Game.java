@@ -63,7 +63,7 @@ public class Game implements Runnable {
 		gameWindow.repaint();		
 
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(1500);
 			
 			String option[] = {"Sim", "Não"};			
 			
